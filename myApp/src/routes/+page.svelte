@@ -17,7 +17,7 @@
 </svelte:head>
 
 <h1 class="mx-0">Latest News Articles</h1>
-<section class="wrapper mx-0 flex flex-wrap flex-row">
+<section class="wrapper mx-0 flex flex-wrap flex-row justify-center">
 	{#if articles.length > 0} 
 		{#each articles as article, i}
 			<CardArticle 

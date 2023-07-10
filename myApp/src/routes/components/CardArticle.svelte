@@ -16,7 +16,7 @@
 	});
 
 	function prettyDate(uglyDate: string) {
-		return new Date(uglyDate).toLocaleDateString();
+		return new Date(uglyDate).toLocaleDateString(); 
 	}
 
 	const queryParams = new URLSearchParams(article).toString();
@@ -33,15 +33,24 @@
 </div>
 
 <style>
-	.article {
-		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-			rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-		border-radius: 20px;
+	 .article{	
+		box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+		border-radius: 5px;
 		width: 30%;
 		gap: 10px;
 	}
 	.article img {
 		height: 200px;
 		width: 300px;
+	}
+	@media ( min-width: 320px ) and ( max-width: 656px ) {  
+		.article{
+			width: 90%;
+		}
+	}
+	@media ( min-width: 657px ) and ( max-width: 805px ) {  
+		.article{
+			width: 45%;
+		}
 	}
 </style>
