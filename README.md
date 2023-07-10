@@ -1,1 +1,1 @@
-# Just Playing With SvelteKit App :rocket:
+# Just Playing With SvelteKit :rocket:
