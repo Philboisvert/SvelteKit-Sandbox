@@ -1,5 +1,14 @@
 <script lang="ts">
-	import Articles from "./Articles.svelte";
+	import CardArticle from "./components/CardArticle.svelte";
+	import { onMount } from "svelte";
+	import type { Article } from "../types";
+	import { _fetchNYT } from "./+page";
+
+	let articles: Article[] = [];
+
+	onMount(async () => {
+		articles = await _fetchNYT();
+	});
 </script>
 
 <svelte:head>
@@ -7,20 +16,22 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
-	<Articles apiKey="h54WGSclubJostDA9InXlExWRAqfEBMo" />
+<h1 class="mx-0">Latest News Articles</h1>
+<section class="wrapper mx-0 flex flex-wrap flex-row">
+	{#if articles.length > 0} 
+		{#each articles as article, i}
+			<CardArticle 
+				article={article}
+				i={i}
+			/>
+		{/each}
+	{:else}
+		<h1 class="mx-0">Loading..</h1>
+	{/if}
 </section>
 
 <style>
-	.user {
-		display: flex;
-		align-items: center;
-		margin: 20px;
-	}
-	.user img {
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		margin-left: 10px;
+	.wrapper {
+		gap: 20px;
 	}
 </style>
