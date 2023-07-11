@@ -4,7 +4,6 @@
 
   export let article: any;
   export let i: any;
-  let theArticles: any;
   let svg: any;
 
   Object.keys(article).forEach((item) => {
@@ -31,12 +30,18 @@
     let getBookmarks = localStorage.getItem("bookmarkedArticles");
     let bookmarks = getBookmarks !== null ? JSON.parse(getBookmarks) : null;
 
-    bookmarks.forEach((element: any, i: number) => {
-      if (element.slug_name === articleClicked.slug_name) {
-        bookmarks = bookmarks.slice(i, 1);
+    //trims doubles if any
+    let results = bookmarks.filter((v:any,i:any,a:any)=>a.findIndex((v2:any)=>['slug_name','byline'].every(k=>v2[k] ===v[k]))===i);
+
+    //Searching for the object we're trying to remove in our localStore, when it matches we're removing it
+    for (var i = 0; i < results.length; i++) {
+      var obj = results[i];
+      if(obj.slug_name === articleClicked.slug_name) {
+        results.splice(i, 1);
       }
-    });
-    localStorage.setItem("bookmarkedArticles", JSON.stringify(bookmarks));
+    }
+
+    localStorage.setItem("bookmarkedArticles", JSON.stringify(results));
     svg.classList.toggle("notBookmarked");
   }
 
@@ -98,28 +103,6 @@
 </div>
 
 <style>
-  .article {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    border-radius: 5px;
-    width: 30%;
-    gap: 10px;
-  }
-  .article img {
-    height: 200px;
-    width: 300px;
-  }
-  @media (min-width: 320px) and (max-width: 656px) {
-    .article {
-      width: 90%;
-    }
-  }
-  @media (min-width: 657px) and (max-width: 805px) {
-    .article {
-      width: 45%;
-    }
-  }
   .svgStar:hover {
     cursor: pointer;
   }
