@@ -6,7 +6,6 @@ export const load = (({ params }) => {
     objectData = Object.fromEntries(  
         new URLSearchParams("?"+params.articleDetails)
     )
-    console.log(objectData.des_facet);
 
     return {
         post: {

@@ -11,7 +11,9 @@
 	</div>
 
 	<nav>
-		
+		<div>
+			<a href="/Bookmark">Bookmarks</a>
+		</div>
 	</nav>
 
 	<div class="corner">
