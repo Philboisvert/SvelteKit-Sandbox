@@ -6,7 +6,6 @@ export const load = (({ params }) => {
     objectData = Object.fromEntries(  
         new URLSearchParams("?"+params.articleDetails)
     )
-
     return {
         post: {
             title: `${objectData.title}`,
