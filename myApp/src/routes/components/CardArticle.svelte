@@ -108,7 +108,7 @@
       />
     </g>
   </svg>
-  <a href="/{queryParams}/" class="text-black text-center btn">Read more</a>
+  <a href="/oneArticle/{queryParams}/" class="text-black text-center btn">Read more</a>
 </div>
 
 <style>

@@ -30,7 +30,9 @@
 	"dependencies": {
 		"@types/lodash": "^4.14.195",
 		"axios": "^1.4.0",
+		"default-passive-events": "^2.0.0",
 		"dotenv": "^16.3.1",
+		"flowbite-svelte": "^0.39.2",
 		"lodash-es": "^4.17.21"
 	}
 }

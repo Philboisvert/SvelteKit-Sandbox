@@ -9,4 +9,5 @@ export interface Article {
     published_date: string;
     category: string;
     multimedia: Multimedia[];
+    section: String;
 }
