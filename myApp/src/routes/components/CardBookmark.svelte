@@ -6,6 +6,7 @@
     let getBookmarks = localStorage.getItem("bookmarkedArticles");
     let bookmarks = getBookmarks !== null ? JSON.parse(getBookmarks) : null;
 
+    //TODO | code repeating here
     //trims doubles if any
     let results = bookmarks.filter(
       (v: any, i: any, a: any) =>
@@ -23,8 +24,8 @@
     }
 
     localStorage.setItem("bookmarkedArticles", JSON.stringify(results));
-    //Bad || TODO store value and subscribe to it
-    location.reload();
+    //Bad || TODO | store value and subscribe to it
+    window.location.replace("/Bookmark");
   }
 </script>
 
