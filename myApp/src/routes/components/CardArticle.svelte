@@ -29,15 +29,13 @@
   function removeBookmark(articleClicked: any) {
     let getBookmarks = localStorage.getItem("bookmarkedArticles");
     let bookmarks = getBookmarks !== null ? JSON.parse(getBookmarks) : null;
-
     //trims doubles if any
     let results = checkDuplicates(bookmarks);
-    //let results = bookmarks.filter((v:any,i:any,a:any)=>a.findIndex((v2:any)=>['slug_name','byline'].every(k=>v2[k] ===v[k]))===i);
 
     //Searching for the object we're trying to remove in our localStore, when it matches we're removing it
     for (var i = 0; i < results.length; i++) {
       var obj = results[i];
-      if(obj.slug_name === articleClicked.slug_name) {
+      if (obj.slug_name === articleClicked.slug_name) {
         results.splice(i, 1);
       }
     }
@@ -56,15 +54,20 @@
     } else {
       let getBookmarks = localStorage.getItem("bookmarkedArticles");
       let bookmarks = getBookmarks !== null ? JSON.parse(getBookmarks) : null;
-      let results = checkDuplicates(bookmarks)
+      let results = checkDuplicates(bookmarks);
       results.push(articleClicked);
       localStorage.setItem("bookmarkedArticles", JSON.stringify(results));
     }
     svg.classList.toggle("notBookmarked");
   }
 
-  function checkDuplicates(bookmarks:Array<{}>) :any{
-    return bookmarks.filter((v:any,i:any,a:any)=>a.findIndex((v2:any)=>['slug_name','byline'].every(k=>v2[k] ===v[k]))===i);
+  function checkDuplicates(bookmarks: Array<{}>): any {
+    return bookmarks.filter(
+      (v: any, i: any, a: any) =>
+        a.findIndex((v2: any) =>
+          ["slug_name", "byline"].every((k) => v2[k] === v[k])
+        ) === i
+    );
   }
 
   const queryParams = new URLSearchParams(article).toString();

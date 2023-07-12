@@ -1,26 +1,29 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { invalidateAll } from '$app/navigation';
   export let article: any;
   import "../../assets/styles.css";
-  
-  function removeBookmark(article: {slug_name: string}) {
+
+  function removeBookmark(article: { slug_name: string }) {
     let getBookmarks = localStorage.getItem("bookmarkedArticles");
     let bookmarks = getBookmarks !== null ? JSON.parse(getBookmarks) : null;
 
     //trims doubles if any
-    let results = bookmarks.filter((v:any,i:any,a:any)=>a.findIndex((v2:any)=>['slug_name','byline'].every(k=>v2[k] ===v[k]))===i);
+    let results = bookmarks.filter(
+      (v: any, i: any, a: any) =>
+        a.findIndex((v2: any) =>
+          ["slug_name", "byline"].every((k) => v2[k] === v[k])
+        ) === i
+    );
 
     //Searching for the object we're trying to remove in our localStore, when it matches we're removing it
     for (var i = 0; i < results.length; i++) {
       var obj = results[i];
-      if(obj.slug_name === article.slug_name) {
+      if (obj.slug_name === article.slug_name) {
         results.splice(i, 1);
       }
     }
 
     localStorage.setItem("bookmarkedArticles", JSON.stringify(results));
-    //very bad
+    //Bad || TODO store value and subscribe to it
     location.reload();
   }
 </script>
@@ -64,7 +67,7 @@
 </div>
 
 <style>
- .x-icon{
+  .x-icon {
     cursor: pointer;
- }
+  }
 </style>

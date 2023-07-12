@@ -1,8 +1,7 @@
-import type { Article } from "../types";
 import axios from "axios";
 
- async function _fetchNYT() {
-    const url = `https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=h54WGSclubJostDA9InXlExWRAqfEBMo`;
+ async function _fetchNYT(offset:number) {
+    const url = `https://api.nytimes.com/svc/news/v3/content/all/all.json?limit=20&offset=${offset}&api-key=h54WGSclubJostDA9InXlExWRAqfEBMo`;
 		try {
 			const response = await axios.get(url);
 			return response.data.results;
