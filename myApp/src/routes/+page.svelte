@@ -74,6 +74,7 @@
   }
 
   const resetValue = () => {
+    //TODO eventually | pretty bad 
     window.location.replace("/");
   };
 

@@ -4,6 +4,7 @@
   export let article: any;
   let svg: any;
 
+  //TODO | Keep the bookmarks full icons when navigating
   function toggleBookmark(articleClicked: {}) {
     svg.classList.contains("notBookmarked")
       ? addBookmark(articleClicked)
