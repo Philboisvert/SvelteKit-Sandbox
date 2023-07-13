@@ -1,14 +1,17 @@
-<script>
+<script lang="ts">
   import Header from "./components/Header.svelte";
   import Footer from "./components/Footer.svelte";
+  import type { PageData } from './$types';
   import "../app.css";
   import "../assets/styles.css";
+
+  export let data: PageData;
 </script>
 
 <div class="app">
   <Header />
   <main>
-    <slot />
+    <slot {data} />
   </main>
   <Footer />
 </div>

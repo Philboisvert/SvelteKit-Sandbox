@@ -1,40 +1,55 @@
 <script lang="ts">
   import CardArticle from "./components/CardArticle.svelte";
+  import fallbackImg from "$lib/images/fallback.png";
   import { Search, Button } from "flowbite-svelte";
-  import { onMount } from "svelte";
   import { inview } from "svelte-inview/dist/index";
-  import { _fetchNYT } from "./+page";
   import type { Article } from "../types";
+  import axios from "axios";
   import "default-passive-events";
 
+  export let data;
   let newArticlesBatch: Article[] = [];
-  let allArticles: Article[] = [];
+  let serverLoadedArticles: Article[] = [];
+  let untrimmedBatch: Article[] = [];
   let offset: number = 20;
-  let value: String;
   let inSearch: boolean = false;
+  let value: String;
 
-  onMount(async () => {
-    newArticlesBatch = await _fetchNYT(offset);
-  });
+  serverLoadedArticles = data.articles;
 
   const handleFullScroll = async (e: any) => {
     offset = offset + 20;
     if (e.detail.inView) {
-      newArticlesBatch = await _fetchNYT(offset);
+      untrimmedBatch = await _fetchNYT(offset);
+      untrimmedBatch.forEach((element: any) => {
+        Object.keys(element).forEach((item) => {
+          if (item == "multimedia") {
+            element[item] =
+              element[item][0]?.url !== undefined
+                ? element[item][0].url
+                : (element[item] = fallbackImg);
+          }
+          if (item === "published_date") {
+            element[item] = new Date(element[item]).toLocaleDateString();
+          }
+        });
+      });
+
+      newArticlesBatch = untrimmedBatch;
     }
   };
 
   const searchValue = () => {
     let trimmedArticles: any = [];
     if (value !== undefined) {
-      for (var i = 0; i < allArticles.length; i++) {
-        var obj = allArticles[i];
+      for (var i = 0; i < serverLoadedArticles.length; i++) {
+        var obj = serverLoadedArticles[i];
         if (obj.section === value) {
           trimmedArticles.push(obj);
         }
       }
       inSearch = true;
-      allArticles = [...trimmedArticles];
+      serverLoadedArticles = [...trimmedArticles];
       //TODO eventually, keep the state and articles
       const searchBtn = document.getElementById("btnSearch");
       const searchInput = document.getElementById("searchInp");
@@ -48,13 +63,23 @@
     }
   };
 
+  async function _fetchNYT(offset: number) {
+    const url = `https://api.nytimes.com/svc/news/v3/content/all/all.json?limit=20&offset=${offset}&api-key=h54WGSclubJostDA9InXlExWRAqfEBMo`;
+    try {
+      const response = await axios.get(url);
+      return response.data.results;
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    }
+  }
+
   const resetValue = () => {
     window.location.replace("/");
   };
 
   $: {
     if (!inSearch) {
-      allArticles = [...allArticles, ...newArticlesBatch];
+      serverLoadedArticles = [...serverLoadedArticles, ...newArticlesBatch];
     }
   }
 </script>
@@ -100,10 +125,19 @@
   Make another search
 </Button>
 
-<section class="wrapper mx-0 flex flex-wrap flex-row justify-center">
+<!-- <section class="wrapper mx-0 flex flex-wrap flex-row justify-center">
   {#if allArticles.length > 0}
     {#each allArticles as article, i}
       <CardArticle {article} {i} />
+    {/each}
+  {/if}
+  <div use:inview={{}} on:inview_change={handleFullScroll} />
+</section> -->
+
+<section class="wrapper mx-0 flex flex-wrap flex-row justify-center">
+  {#if serverLoadedArticles.length > 0}
+    {#each serverLoadedArticles as article}
+      <CardArticle {article} />
     {/each}
   {/if}
   <div use:inview={{}} on:inview_change={handleFullScroll} />

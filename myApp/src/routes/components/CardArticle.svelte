@@ -1,24 +1,8 @@
 <script lang="ts">
-  import fallbackImg from "$lib/images/fallback.png";
   import "../../assets/styles.css";
-
+  
   export let article: any;
-  export let i: any;
   let svg: any;
-
-  Object.keys(article).forEach((item) => {
-    if (item === "multimedia") {
-      article[item] = article.multimedia[i]?.url || fallbackImg;
-    }
-
-    if (item === "published_date") {
-      article[item] = prettyDate(article[item]);
-    }
-  });
-
-  function prettyDate(uglyDate: string) {
-    return new Date(uglyDate).toLocaleDateString();
-  }
 
   function toggleBookmark(articleClicked: {}) {
     svg.classList.contains("notBookmarked")
