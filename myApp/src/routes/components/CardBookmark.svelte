@@ -13,8 +13,8 @@
         a.findIndex((v2: any) =>
           ["slug_name", "byline"].every((k) => v2[k] === v[k])
         ) === i
-    );
-
+    ); 
+//test
     //Searching for the object we're trying to remove in our localStore, when it matches we're removing it
     for (var i = 0; i < results.length; i++) {
       var obj = results[i];
